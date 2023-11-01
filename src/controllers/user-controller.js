@@ -70,9 +70,9 @@ const signIn = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    return res.status(500).json({
-      err: error,
-      message: "something went wrong",
+    return res.status(error.statusCode).json({
+      err: error.explanation,
+      message: error.message,
       success: false,
       data: {},
     });
@@ -81,8 +81,8 @@ const signIn = async (req, res) => {
 
 const isAuthnetication = async (req, res) => {
   try {
-    const token= req.headers['x-access-token'];
-    const response= await userService.isAuthnetication(token);
+    const token = req.headers["x-access-token"];
+    const response = await userService.isAuthnetication(token);
     return res.status(201).json({
       err: {},
       message: "User is Authneticated",
@@ -99,9 +99,9 @@ const isAuthnetication = async (req, res) => {
   }
 };
 
-const isAdmin=async (req,res)=>{
+const isAdmin = async (req, res) => {
   try {
-    const response= await userService.isAdmin(req.body.id)
+    const response = await userService.isAdmin(req.body.id);
     return res.status(201).json({
       err: {},
       message: "User is either Admin or Not",
@@ -116,12 +116,12 @@ const isAdmin=async (req,res)=>{
       data: {},
     });
   }
-}
+};
 module.exports = {
   create,
   destroy,
   get,
   signIn,
   isAuthnetication,
-  isAdmin
+  isAdmin,
 };

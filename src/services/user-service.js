@@ -52,6 +52,9 @@ class UserSrevices {
       const token = this.createToken({ email: user.email, id: user.id });
       return token;
     } catch (error) {
+      if(error.name=="AttributeNotFound"){
+        throw error;
+      }
       console.log("something went wrong on Signed In", error);
       throw error;
     }
