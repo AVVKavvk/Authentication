@@ -9,15 +9,15 @@ const create = async (req, res) => {
     return res.status(201).json({
       err: {},
       message: "User Created Successfully",
-      success: false,
-      result: user,
+      success: true,
+      data: user,
     });
   } catch (error) {
     return res.status(500).json({
       err: error,
       message: "something went wrong",
       success: false,
-      result: {},
+      data: {},
     });
   }
 };
@@ -28,14 +28,14 @@ const destroy = async (req, res) => {
       err: {},
       message: "User Deleted Successfully",
       success: true,
-      result: response,
+      data: response,
     });
   } catch (error) {
     return res.status(500).json({
       err: error,
       message: "something went wrong",
       success: false,
-      result: {},
+      data: {},
     });
   }
 };
@@ -46,20 +46,41 @@ const get = async (req, res) => {
       err: {},
       message: "User Fetched Successfully",
       success: true,
-      result: response,
+      data: response,
     });
   } catch (error) {
     return res.status(500).json({
       err: error,
       message: "something went wrong",
       success: false,
-      result: {},
+      data: {},
     });
   }
 };
-
+const signIn = async (req, res) => {
+  try {
+    const user = await userService.signIn({
+      email: req.body.email,
+      password: req.body.password,
+    });
+    return res.status(201).json({
+      err: {},
+      message: "User Signed In Successfully",
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      err: error,
+      message: "something went wrong",
+      success: false,
+      data: {},
+    });
+  }
+};
 module.exports = {
   create,
   destroy,
-  get
+  get,
+  signIn,
 };
