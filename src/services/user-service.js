@@ -50,6 +50,25 @@ class UserSrevices {
       throw error;
     }
   }
+
+  async isAuthnetication(token){
+    try {
+      const response=this.verifyToken(token);
+      if(!response) {
+        throw {error:"token not vaild"};
+      }
+      const user=await this.userRepository.getUser(response.id);
+      if(!user){
+        return console.log("User not found");
+      }
+
+      return user.id;
+    } catch (error) {
+      
+      console.log("something went wrong during Auth service");
+      throw error;
+    }
+  }
   createToken(user) {
     try {
       const token = jwt.sign(user, JWT_Token, { expiresIn: "30d" });

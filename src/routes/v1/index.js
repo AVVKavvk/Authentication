@@ -15,4 +15,5 @@ router.post(
   AuthRequestVaildators.authRequestVaildator,
   userController.signIn
 );
+router.get('/isAuthneticated',userController.isAuthnetication)
 module.exports = router;

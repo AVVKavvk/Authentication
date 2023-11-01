@@ -78,9 +78,30 @@ const signIn = async (req, res) => {
     });
   }
 };
+
+const isAuthnetication = async (req, res) => {
+  try {
+    const token= req.headers['x-access-token'];
+    const response= await userService.isAuthnetication(token);
+    return res.status(201).json({
+      err: {},
+      message: "User is Authneticated",
+      success: true,
+      data: response,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      err: error,
+      message: "something went wrong",
+      success: false,
+      data: {},
+    });
+  }
+};
 module.exports = {
   create,
   destroy,
   get,
   signIn,
+  isAuthnetication,
 };
