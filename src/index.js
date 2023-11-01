@@ -1,18 +1,20 @@
 const express = require("express");
-const { PORT } = require("./config/server");
+const { PORT, DB_SYNC } = require("./config/server");
 const apiRouter = require("./routes/index");
-const UserService = require("./services/user-service");
+const db = require("./models/index");
+const {User,Role} = require('./models/index')
 const serverStart = async () => {
   const app = express();
   app.use(express.json({ limit: "10mb" }));
   app.use("/api", apiRouter);
 
-  app.listen(PORT, () => {
-    const repo = new UserService();
-    // const token = repo.createToken({ email: "vipin@gmailcom", id: 1 });
-    // console.log(token);
-    // const response=repo.verifyToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcGluQGdtYWlsY29tIiwiaWQiOjEsImlhdCI6MTY5ODgzNDIwNiwiZXhwIjoxNzAxNDI2MjA2fQ.wfF6emaU3HBOXY4omxXxCqSavHOAQnaG_-ktKAJwE1Y')
-    // console.log(response);
+  app.listen(PORT,async () => {
+    if (DB_SYNC) {
+      db.sequelize.sync({ alter: true });
+    }
+    const user = await User.findByPk(9);
+    const role= await Role.findByPk(2);
+    role.addUser(user)
     console.log(`Server is running on port ${PORT}`);
   });
 };
