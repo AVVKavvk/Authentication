@@ -10,4 +10,15 @@ const authRequestVaildator = (req, res, next) => {
   next();
 };
 
-module.exports = {authRequestVaildator};
+const vaildateIsAdminRequset = (req, res, next) => {
+  if (!req.body.id) {
+    return res.status(400).json({
+      data: {},
+      success: false,
+      error: "Please provide user",
+      message: "something went wrong",
+    });
+  }
+  next();
+};
+module.exports = { authRequestVaildator, vaildateIsAdminRequset };

@@ -12,9 +12,9 @@ const serverStart = async () => {
     if (DB_SYNC) {
       db.sequelize.sync({ alter: true });
     }
-    const user = await User.findByPk(9);
-    const role= await Role.findByPk(2);
-    role.addUser(user)
+    // const user = await User.findByPk(9);
+    // const role= await Role.findByPk(2);
+    // role.addUser(user)
     console.log(`Server is running on port ${PORT}`);
   });
 };

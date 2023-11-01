@@ -98,10 +98,30 @@ const isAuthnetication = async (req, res) => {
     });
   }
 };
+
+const isAdmin=async (req,res)=>{
+  try {
+    const response= await userService.isAdmin(req.body.id)
+    return res.status(201).json({
+      err: {},
+      message: "User is either Admin or Not",
+      success: true,
+      data: response,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      err: error,
+      message: "something went wrong",
+      success: false,
+      data: {},
+    });
+  }
+}
 module.exports = {
   create,
   destroy,
   get,
   signIn,
   isAuthnetication,
+  isAdmin
 };

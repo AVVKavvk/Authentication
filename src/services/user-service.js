@@ -35,7 +35,7 @@ class UserSrevices {
     }
   }
 
-  async signIn({email, password:plainPassword}) {
+  async signIn({ email, password: plainPassword }) {
     try {
       const user = await this.userRepository.getUserByEmail(email);
       const checkPassword = this.verifyPassword(plainPassword, user.password);
@@ -51,20 +51,19 @@ class UserSrevices {
     }
   }
 
-  async isAuthnetication(token){
+  async isAuthnetication(token) {
     try {
-      const response=this.verifyToken(token);
-      if(!response) {
-        throw {error:"token not vaild"};
+      const response = this.verifyToken(token);
+      if (!response) {
+        throw { error: "token not vaild" };
       }
-      const user=await this.userRepository.getUser(response.id);
-      if(!user){
+      const user = await this.userRepository.getUser(response.id);
+      if (!user) {
         return console.log("User not found");
       }
 
       return user.id;
     } catch (error) {
-      
       console.log("something went wrong during Auth service");
       throw error;
     }
@@ -90,6 +89,16 @@ class UserSrevices {
   verifyPassword(plainPassword, encryptedPassword) {
     try {
       return bcrypt.compareSync(plainPassword, encryptedPassword);
+    } catch (error) {
+      console.log("something went wrong on check password");
+      throw error;
+    }
+  }
+
+  async isAdmin(userId) {
+    try {
+      const response= await this.userRepository.isAdmin(userId);
+      return response;
     } catch (error) {
       console.log("something went wrong on check password");
       throw error;
