@@ -32,15 +32,15 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
 
-    User.beforeCreate(async user => {
-      const salt = bcrypt.genSalt(saltRounds);
-      const encryptedPassword = bcrypt.hashSync(user.passwors, salt);
-      user.password = encryptedPassword;
-    }),
     {
       sequelize,
       modelName: "User",
     }
   );
+  User.beforeCreate(async user => {
+    const salt = bcrypt.genSaltSync(10);
+    const encryptedPassword = bcrypt.hashSync(user.password, salt);
+    user.password = encryptedPassword;
+  });
   return User;
 };

@@ -12,15 +12,18 @@ class UserRepository {
   }
   async destroyUser(userId) {
     try {
-      const user = await User.destroy({
+      const response = await User.destroy({
         where: {
           id:userId,
         },
       });
-      return user;
+      return response;
     } catch (error) {
       console.log("somrthing went wrong on repository layer");
       throw error;
     }
   }
 }
+
+
+module.exports=UserRepository;
