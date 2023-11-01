@@ -14,7 +14,7 @@ class UserRepository {
     try {
       const response = await User.destroy({
         where: {
-          id:userId,
+          id: userId,
         },
       });
       return response;
@@ -23,7 +23,17 @@ class UserRepository {
       throw error;
     }
   }
+  async getUser(userId) {
+    try {
+      const user = await User.findByPk(userId, {
+        attributes: ["email", "id"],
+      });
+      return user;
+    } catch (error) {
+      console.log("somrthing went wrong on repository layer");
+      throw error;
+    }
+  }
 }
 
-
-module.exports=UserRepository;
+module.exports = UserRepository;

@@ -39,8 +39,27 @@ const destroy = async (req, res) => {
     });
   }
 };
+const get = async (req, res) => {
+  try {
+    const response = await userService.getUser(req.params.id);
+    return res.status(200).json({
+      err: {},
+      message: "User Fetched Successfully",
+      success: true,
+      result: response,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      err: error,
+      message: "something went wrong",
+      success: false,
+      result: {},
+    });
+  }
+};
 
 module.exports = {
   create,
   destroy,
+  get
 };
